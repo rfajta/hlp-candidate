@@ -120,3 +120,29 @@ message Reject {
     required uint32 rejectCode = 3;
     optional bytes hash = 4;
 }
+
+message EmptyResult {
+}
+
+service BlockchainApi {
+    // APIBlockIdList getBlockIds(BID blockId, int count) throws BCSAPIException;
+    rpc GetBlockIds(BLKIDSREQ) returns (BLKIDS);
+
+    // APIBlock getBlock(BID hash) throws BCSAPIException;
+    rpc GetBlock(Hash) returns (BLK);
+
+    // APITransaction getTransaction(TID hash) throws BCSAPIException;
+    rpc GetTransaction(Hash) returns (TX);
+
+    // void sendTransaction(Transaction transaction) throws BCSAPIException;
+    rpc SendTransaction(TX) returns (EmptyResult);
+
+    // void registerTransactionListener(TransactionListener listener) throws BCSAPIException;
+    // Hash is the hashcode which identifies the listener
+    rpc RegisterTransactionListener(Hash) returns (EmptyResult);
+
+    // public void removeTransactionListener(TransactionListener listener);
+    // Hash is the hashcode which identifies the listener
+    rpc RemoveTransactionListener(Hash) returns (EmptyResult);
+}
+

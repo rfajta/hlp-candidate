@@ -3,7 +3,7 @@ server:
     applicationContextPath: /
 logging:
   level: DEBUG
-hyperledger:
+hyperLedger:
   embedded:
     blockchain:
       chain: "regtest"
@@ -18,7 +18,8 @@ hyperledger:
       memory: true
 
     mining:
-      enabled: false
+      enabled: true
       __comment__: "address generated for private key: Kxj5wXRXPxVZScsHkK6Dwo2k7enphcW9wWidvZ93wTALHDXjDo2U"
       minerAddress: "1CNABTVtwxFQBTvazuGfxhT87sfssmFbdE"
+      delayBetweenMiningBlocksSecs: 30
 

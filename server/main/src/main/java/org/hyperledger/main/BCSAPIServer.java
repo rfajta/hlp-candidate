@@ -179,7 +179,7 @@ public class BCSAPIServer {
                     for (ByteString bs : request.getMatchList()) {
                         match.add(new ByteVector(bs.toByteArray()));
                     }
-                    final long after = request.hasAfter() ? request.getAfter() : 0;
+                    final long after = request.getHasAfter() ? request.getAfter() : 0;
                     log.debug("matchRequest " + (utxo ? "UTXO" : "") + " for ", match.size() + " patterns after " + after);
                     requestProcessor.execute(() -> {
                         ConnectorSession session = null;
@@ -578,7 +578,7 @@ public class BCSAPIServer {
                 try {
                     byte[] body = o.getPayload();
                     BCSAPIMessage.BLKIDSREQ request = BCSAPIMessage.BLKIDSREQ.parseFrom(body);
-                    BID hash = request.hasBlockHash() ? new BID(request.getBlockHash().toByteArray()) : null;
+                    BID hash = request.getHasBlockHash() ? new BID(request.getBlockHash().toByteArray()) : null;
                     int count = request.getCount();
                     log.debug("blockIdsRequest for " + count + " block ids from " + hash);
                     ids = getBlockIds(hash, count);
@@ -594,7 +594,7 @@ public class BCSAPIServer {
                             }
                             builder.setHeight(ids.height);
                             if (ids.previousBlockId != null)
-                                builder.setPreviousBlockId(ByteString.copyFrom(ids.previousBlockId.unsafeGetArray()));
+                                builder.setPreviousBlockId(ByteString.copyFrom(ids.previousBlockId.unsafeGetArray())).setHasPreviousBlockId(true);
                             BCSAPIMessage.BLKIDS message = builder.build();
                             reply(o.getReplyProducer(), message.toByteArray());
                         } else {

@@ -15,12 +15,14 @@
 package org.hyperledger.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.protobuf.ByteString;
 import protos.DevopsGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.netty.NegotiationType;
 import io.grpc.netty.NettyChannelBuilder;
 import org.hyperledger.common.*;
 import protos.Chaincode;
+import protos.Openchain;
 
 import java.io.IOException;
 import java.util.*;
@@ -36,7 +38,7 @@ public class OBCBlockStore implements BlockStore {
         dbs = DevopsGrpc.newBlockingStub(channel);
     }
 
-    private String query(String functionName, Iterable<String> args) {
+    private ByteString query(String functionName, Iterable<String> args) {
         Chaincode.ChaincodeID chainCodeId = Chaincode.ChaincodeID.newBuilder()
                 .setName("mycc")
                 .build();
@@ -55,9 +57,9 @@ public class OBCBlockStore implements BlockStore {
                 .setChaincodeSpec(chaincodeSpec)
                 .build();
 
-        dbs.invoke(chaincodeInvocationSpec);
+        Openchain.Response response = dbs.query(chaincodeInvocationSpec);
 
-        return null;
+        return response.getMsg();
     }
 
     @Override
@@ -127,9 +129,10 @@ public class OBCBlockStore implements BlockStore {
 
     @Override
     public boolean hasTransaction(TID hash) throws HyperLedgerException {
-        String result = query("has_transaction", Collections.singletonList(hash.toString()));
+        ByteString result = query("has_transaction", Collections.singletonList(hash.toString()));
+        byte[] resultStr = result.toByteArray();
         try {
-            Map<String, Object> resultMap = new ObjectMapper().readValue(result, HashMap.class);
+            Map<String, Object> resultMap = new ObjectMapper().readValue(resultStr, HashMap.class);
             return (boolean) resultMap.get("result");
         } catch (IOException e) {
             e.printStackTrace();

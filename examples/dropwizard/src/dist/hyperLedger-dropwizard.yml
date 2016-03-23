@@ -3,6 +3,7 @@ server:
     applicationContextPath: /
 logging:
   level: DEBUG
+type: "grpc"
 hyperLedger:
   embedded:
     blockchain:
@@ -22,4 +23,7 @@ hyperLedger:
       __comment__: "address generated for private key: Kxj5wXRXPxVZScsHkK6Dwo2k7enphcW9wWidvZ93wTALHDXjDo2U"
       minerAddress: "1CNABTVtwxFQBTvazuGfxhT87sfssmFbdE"
       delayBetweenMiningBlocksSecs: 30
+gRPCConnectedHyperLedger:
+  grpc:
+    ip: "127.0.0.1"
 

@@ -16,15 +16,32 @@ package org.hyperledger.examples.dropwizard;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import org.hyperledger.dropwizard.EmbeddedHyperLedger;
+import org.hyperledger.dropwizard.grpc.GRPCConnectedHyperLedger;
+import org.hyperledger.dropwizard.HyperLedgerConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  */
 public class BlockExplorerConfiguration extends Configuration {
+    private static final Logger log = LoggerFactory.getLogger(BlockExplorerConfiguration.class);
+    
     @JsonProperty
     private EmbeddedHyperLedger hyperLedger;
+    
+    @JsonProperty
+    private String type;
+    
+    @JsonProperty
+    private GRPCConnectedHyperLedger gRPCConnectedHyperLedger;
 
-    public EmbeddedHyperLedger getHyperLedger() {
-        return hyperLedger;
+    public HyperLedgerConfiguration getHyperLedger() {
+    	if("grpc".equalsIgnoreCase(type)) {
+            return gRPCConnectedHyperLedger;
+    	}
+    	else {
+            return hyperLedger;
+    	}
     }
 }

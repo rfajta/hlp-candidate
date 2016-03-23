@@ -56,6 +56,7 @@ public class BlockExplorerApp extends Application<BlockExplorerConfiguration> {
             @Override
             protected HyperLedgerConfiguration getSupernodeConfiguration(BlockExplorerConfiguration configuration) {
                 return configuration.getHyperLedger();
+//                return configuration.getGRPCConnectedHyperLedger();
             }
         };
         bootstrap.addBundle(hyperLedgerBundle);

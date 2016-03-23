@@ -11,14 +11,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.hyperledger.core;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import protos.DevopsGrpc;
+import io.grpc.ManagedChannel;
+import io.grpc.netty.NegotiationType;
+import io.grpc.netty.NettyChannelBuilder;
 import org.hyperledger.common.*;
+import protos.Chaincode;
 
-import java.util.List;
-import java.util.Set;
+import java.io.IOException;
+import java.util.*;
 
 public class OBCBlockStore implements BlockStore {
+
+    private DevopsGrpc.DevopsBlockingStub dbs;
+
+    public OBCBlockStore() {
+        ManagedChannel channel = NettyChannelBuilder.forAddress("localhost", 30303)
+                .negotiationType(NegotiationType.PLAINTEXT)
+                .build();
+        dbs = DevopsGrpc.newBlockingStub(channel);
+    }
+
+    private String query(String functionName, Iterable<String> args) {
+        Chaincode.ChaincodeID chainCodeId = Chaincode.ChaincodeID.newBuilder()
+                .setName("mycc")
+                .build();
+
+        Chaincode.ChaincodeInput chainCodeInput = Chaincode.ChaincodeInput.newBuilder()
+                .setFunction(functionName)
+                .addAllArgs(args)
+                .build();
+
+        Chaincode.ChaincodeSpec chaincodeSpec = Chaincode.ChaincodeSpec.newBuilder()
+                .setChaincodeID(chainCodeId)
+                .setCtorMsg(chainCodeInput)
+                .build();
+
+        Chaincode.ChaincodeInvocationSpec chaincodeInvocationSpec = Chaincode.ChaincodeInvocationSpec.newBuilder()
+                .setChaincodeSpec(chaincodeSpec)
+                .build();
+
+        dbs.invoke(chaincodeInvocationSpec);
+
+        return null;
+    }
+
     @Override
     public List<ValidatedTransaction> getDescendants(List<TID> tids) throws HyperLedgerException {
         throw new UnsupportedOperationException();
@@ -86,6 +127,13 @@ public class OBCBlockStore implements BlockStore {
 
     @Override
     public boolean hasTransaction(TID hash) throws HyperLedgerException {
+        String result = query("has_transaction", Collections.singletonList(hash.toString()));
+        try {
+            Map<String, Object> resultMap = new ObjectMapper().readValue(result, HashMap.class);
+            return (boolean) resultMap.get("result");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         throw new UnsupportedOperationException();
     }
 

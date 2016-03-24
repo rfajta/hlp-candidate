@@ -143,7 +143,6 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public APIHeader getBlockHeader(BID hash) throws BCSAPIException {
-        // TODO we will need this
         throw new UnsupportedOperationException();
     }
 

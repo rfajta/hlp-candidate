@@ -25,6 +25,8 @@ import org.junit.rules.ExpectedException;
 
 import java.security.Security;
 
+import static org.junit.Assert.assertEquals;
+
 public class AccountOperationsViaGrpcTest {
     @BeforeClass
     public static void init() {
@@ -40,7 +42,7 @@ public class AccountOperationsViaGrpcTest {
     @Test
     public void sendToAddressTest() throws Exception {
         BCSAPI api = regtestRule.getBCSAPI();
-        System.out.println(api.getChainHeight());
+        assertEquals(1, api.getChainHeight());
     }
 
 }

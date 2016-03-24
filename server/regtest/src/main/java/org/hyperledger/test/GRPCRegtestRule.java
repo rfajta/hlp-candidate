@@ -40,8 +40,9 @@ public class GRPCRegtestRule extends ExternalResource {
         server = Main.createAndStartServer(system);
         String host = config.getString("gRPCConnectedHyperLedger.grpc.host");
         int port = config.getInt("gRPCConnectedHyperLedger.grpc.port");
+        int observerPort = config.getInt("gRPCConnectedHyperLedger.grpc.observerPort");
 
-        bcsapi = new GRPCClient(host, port);
+        bcsapi = new GRPCClient(host, port, observerPort);
         CoreAssembly coreAssembly = HyperLedgerExtension.get(system).coreAssembly();
     }
 

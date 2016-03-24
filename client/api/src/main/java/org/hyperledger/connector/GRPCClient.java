@@ -54,8 +54,10 @@ public class GRPCClient implements BCSAPI {
 
     private final GRPCObserver observer;
 
-    public GRPCClient(String host, int port) {
+    public GRPCClient(String host, int port, int observerPort) {
+        log.debug("Trying to connect to GRPC host:port={}:{}, host:observerPort={}:{}, ", host, port, observerPort);
         ManagedChannel channel = NettyChannelBuilder.forAddress(host, port).negotiationType(NegotiationType.PLAINTEXT).build();
+        ManagedChannel observerChannel = NettyChannelBuilder.forAddress(host, observerPort).negotiationType(NegotiationType.PLAINTEXT).build();
         dbs = DevopsGrpc.newBlockingStub(channel);
         obs = OpenchainGrpc.newBlockingStub(channel);
         observer = new GRPCObserver(channel);

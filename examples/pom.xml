@@ -31,5 +31,6 @@
     <modules>
         <module>jmsclient</module>
         <module>dropwizard</module>
+        <module>grpcclient</module>
     </modules>
 </project>

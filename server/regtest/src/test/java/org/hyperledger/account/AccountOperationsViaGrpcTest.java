@@ -27,6 +27,7 @@ import org.junit.rules.ExpectedException;
 import java.security.Security;
 
 import static org.hyperledger.account.ActionWaiter.expected;
+import static org.hyperledger.account.ActionWaiter.expectedOneOnEach;
 import static org.junit.Assert.assertEquals;
 
 public class AccountOperationsViaGrpcTest {
@@ -61,5 +62,20 @@ public class AccountOperationsViaGrpcTest {
         int newChainHeight = api.getChainHeight();
         assertEquals("No block was created", startingChainHeight + 1, newChainHeight);
         assertEquals("Incorrect balance", 100000000, senderAccount.getCoins().getTotalSatoshis());
+
+        Address receiverAddress = PrivateKey.createNew().getAddress();
+        ReadOnlyAccount receiverAccount = new BaseReadOnlyAccount(new AddressListChain(receiverAddress));
+        api.registerTransactionListener(receiverAccount);
+
+        TransactionFactory factory = new BaseTransactionFactory(senderAccount);
+
+        Transaction nextTx = factory.propose(receiverAddress, 30000).sign(senderKeyChain);
+        ActionWaiter.execute(() -> api.sendTransaction(nextTx), expectedOneOnEach(senderAccount, receiverAccount));
+
+        assertEquals("Incorrect balance", 30000, receiverAccount.getCoins().getTotalSatoshis());
+        assertEquals("Incorrect confirmed", 30000, receiverAccount.getConfirmedCoins().getTotalSatoshis());
+        // 5000 less because the transaction has an output with the tx fee
+        assertEquals("Incorrect balance", 99965000, senderAccount.getCoins().getTotalSatoshis());
+        assertEquals("Incorrect confirmed", 99965000, senderAccount.getConfirmedCoins().getTotalSatoshis());
     }
 }

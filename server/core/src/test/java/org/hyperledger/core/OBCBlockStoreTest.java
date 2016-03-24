@@ -25,8 +25,9 @@ public class OBCBlockStoreTest {
     private BlockStore bs = new OBCBlockStore();
 
     @Test
-    public void hasTransactionTest() throws HyperLedgerException {
+    public void hasTransactionTest() throws HyperLedgerException, InterruptedException {
         boolean result = bs.hasTransaction(TID.INVALID);
         assertTrue(result);
+        Thread.sleep(120000);
     }
 }

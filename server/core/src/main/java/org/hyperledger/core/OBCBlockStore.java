@@ -16,13 +16,12 @@ package org.hyperledger.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.ByteString;
-import protos.DevopsGrpc;
+import io.grpc.stub.StreamObserver;
+import protos.*;
 import io.grpc.ManagedChannel;
 import io.grpc.netty.NegotiationType;
 import io.grpc.netty.NettyChannelBuilder;
 import org.hyperledger.common.*;
-import protos.Chaincode;
-import protos.Openchain;
 
 import java.io.IOException;
 import java.util.*;
@@ -30,17 +29,23 @@ import java.util.*;
 public class OBCBlockStore implements BlockStore {
 
     private DevopsGrpc.DevopsBlockingStub dbs;
+    private OpenchainEventsGrpc.OpenchainEventsStub es;
 
     public OBCBlockStore() {
-        ManagedChannel channel = NettyChannelBuilder.forAddress("localhost", 30303)
+        ManagedChannel devopsChannel = NettyChannelBuilder.forAddress("localhost", 30303)
                 .negotiationType(NegotiationType.PLAINTEXT)
                 .build();
-        dbs = DevopsGrpc.newBlockingStub(channel);
+        ManagedChannel eventsChannel = NettyChannelBuilder.forAddress("localhost", 31315)
+                .negotiationType(NegotiationType.PLAINTEXT)
+                .build();
+        dbs = DevopsGrpc.newBlockingStub(devopsChannel);
+        es = OpenchainEventsGrpc.newStub(eventsChannel);
+        chat();
     }
 
     private ByteString query(String functionName, Iterable<String> args) {
         Chaincode.ChaincodeID chainCodeId = Chaincode.ChaincodeID.newBuilder()
-                .setName("mycc")
+                .setName("utxo")
                 .build();
 
         Chaincode.ChaincodeInput chainCodeInput = Chaincode.ChaincodeInput.newBuilder()
@@ -60,6 +65,42 @@ public class OBCBlockStore implements BlockStore {
         Openchain.Response response = dbs.query(chaincodeInvocationSpec);
 
         return response.getMsg();
+    }
+
+    private void chat() {
+        StreamObserver<Events.OpenchainEvent> receiver = new StreamObserver<Events.OpenchainEvent>() {
+            @Override
+            public void onNext(Events.OpenchainEvent openchainEvent) {
+                System.out.println("new event: " + openchainEvent.toString());
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                throw new RuntimeException(throwable);
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("onComplete");
+            }
+        };
+
+        StreamObserver<Events.OpenchainEvent> sender = es.chat(receiver);
+
+        Events.Interest interest = Events.Interest.newBuilder()
+                .setEventType("block")
+                .setResponseType(Events.Interest.ResponseType.PROTOBUF)
+                .build();
+
+        Events.Register register = Events.Register.newBuilder()
+                .addEvents(0, interest)
+                .build();
+
+        Events.OpenchainEvent registerEvent = Events.OpenchainEvent.newBuilder()
+                .setRegister(register)
+                .build();
+
+        sender.onNext(registerEvent);
     }
 
     @Override
@@ -129,15 +170,9 @@ public class OBCBlockStore implements BlockStore {
 
     @Override
     public boolean hasTransaction(TID hash) throws HyperLedgerException {
-        ByteString result = query("has_transaction", Collections.singletonList(hash.toString()));
+        ByteString result = query("getTran", Collections.singletonList(hash.toString()));
         byte[] resultStr = result.toByteArray();
-        try {
-            Map<String, Object> resultMap = new ObjectMapper().readValue(resultStr, HashMap.class);
-            return (boolean) resultMap.get("result");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        throw new UnsupportedOperationException();
+        return resultStr.length != 0;
     }
 
     @Override

@@ -24,7 +24,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.ManagedChannel;
 import io.grpc.netty.NegotiationType;
 import io.grpc.netty.NettyChannelBuilder;
-import io.grpc.stub.StreamObserver;
 import org.hyperledger.api.*;
 import org.hyperledger.common.*;
 import org.slf4j.Logger;
@@ -37,7 +36,6 @@ import protos.Chaincode.ChaincodeInvocationSpec;
 import protos.Chaincode.ChaincodeSpec;
 import protos.DevopsGrpc;
 import protos.DevopsGrpc.DevopsBlockingStub;
-import protos.Events;
 
 import protos.Openchain;
 import protos.OpenchainGrpc;
@@ -107,12 +105,6 @@ public class GRPCClient implements BCSAPI {
         return response.getMsg();
     }
 
-    public int getBlockHeight() {
-        BlockCount height = obs.getBlockCount(com.google.protobuf.Empty.getDefaultInstance());
-        return (int) height.getCount();
-    }
-
-
     @Override
     public String getClientVersion() throws BCSAPIException {
         throw new UnsupportedOperationException();
@@ -140,7 +132,8 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public int getChainHeight() throws BCSAPIException {
-        throw new UnsupportedOperationException();
+        BlockCount height = obs.getBlockCount(com.google.protobuf.Empty.getDefaultInstance());
+        return (int) height.getCount();
     }
 
     @Override

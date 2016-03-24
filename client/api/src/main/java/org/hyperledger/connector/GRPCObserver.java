@@ -21,12 +21,16 @@ import io.grpc.stub.StreamObserver;
 import org.hyperledger.api.APITransaction;
 import org.hyperledger.api.BCSAPIMessage;
 import org.hyperledger.api.TransactionListener;
+import org.hyperledger.common.BID;
+import org.hyperledger.common.ByteUtils;
 import org.hyperledger.common.HyperLedgerException;
+import org.hyperledger.common.WireFormatter;
 import protos.Chaincode;
 import protos.OpenchainEventsGrpc;
 import protos.Events;
 
 import javax.xml.bind.DatatypeConverter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,9 +52,9 @@ public class GRPCObserver {
                         Chaincode.ChaincodeInvocationSpec invocationSpec = Chaincode.ChaincodeInvocationSpec.parseFrom(invocationSpecBytes);
                         String transactionString = invocationSpec.getChaincodeSpec().getCtorMsg().getArgs(0);
                         byte[] transactionBytes = DatatypeConverter.parseBase64Binary(transactionString);
-                        BCSAPIMessage.TX tx = BCSAPIMessage.TX.parseFrom(transactionBytes);
-                        listener.process(APITransaction.fromProtobuf(tx));
-                    } catch (HyperLedgerException | InvalidProtocolBufferException e) {
+                        APITransaction tx = new APITransaction(new WireFormatter().fromWire(transactionBytes), BID.INVALID);
+                        listener.process(tx);
+                    } catch (HyperLedgerException | IOException e) {
                         e.printStackTrace();
                     }
                 });

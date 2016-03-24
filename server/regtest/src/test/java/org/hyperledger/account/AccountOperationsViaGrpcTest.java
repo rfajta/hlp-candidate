@@ -16,6 +16,7 @@ package org.hyperledger.account;
 import com.typesafe.config.ConfigFactory;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.hyperledger.api.BCSAPI;
+import org.hyperledger.common.*;
 import org.hyperledger.test.GRPCRegtestRule;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -25,6 +26,7 @@ import org.junit.rules.ExpectedException;
 
 import java.security.Security;
 
+import static org.hyperledger.account.ActionWaiter.expected;
 import static org.junit.Assert.assertEquals;
 
 public class AccountOperationsViaGrpcTest {
@@ -42,7 +44,25 @@ public class AccountOperationsViaGrpcTest {
     @Test
     public void sendToAddressTest() throws Exception {
         BCSAPI api = regtestRule.getBCSAPI();
-        assertEquals(1, api.getChainHeight());
-    }
+        int startingChainHeight = api.getChainHeight();
 
+        PrivateKey priv = PrivateKey.createNew();
+        KeyListChain senderKeyChain = new KeyListChain(priv);
+
+        UIAddress senderAddress = new UIAddress(UIAddress.Network.TEST, senderKeyChain.getNextReceiverAddress());
+        BaseAccount senderAccount = new BaseAccount(senderKeyChain);
+        api.registerTransactionListener(senderAccount);
+
+        Transaction tx = Transaction.create()
+                .inputs(TransactionInput.create().source(TID.INVALID, -1).build())
+                .outputs(TransactionOutput.create().payTo(priv.getAddress()).value(100000000).build())
+                .build();
+
+        ActionWaiter.execute(() -> api.sendTransaction(tx), expected(senderAccount, 1));
+
+        int newChainHeight = api.getChainHeight();
+        assertEquals(startingChainHeight + 1, newChainHeight);
+
+        assertEquals("Incorrect balance", 100000000, senderAccount.getCoins().getTotalSatoshis());
+    }
 }

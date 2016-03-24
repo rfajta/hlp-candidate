@@ -14,6 +14,8 @@
 
 package org.hyperledger.connector;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
@@ -42,6 +44,7 @@ import protos.OpenchainGrpc;
 import protos.OpenchainGrpc.OpenchainBlockingStub;
 import protos.Api.BlockCount;
 
+import javax.xml.bind.DatatypeConverter;
 
 public class GRPCClient implements BCSAPI {
     private static final Logger log = LoggerFactory.getLogger(GRPCClient.class);
@@ -156,12 +159,14 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public APITransaction getTransaction(TID hash) throws BCSAPIException {
-        ByteString result = query("getTran", Collections.singletonList(hash.toString()));
-        byte[] resultStr = result.toByteArray();
         try {
-            return APITransaction.fromProtobuf(BCSAPIMessage.TX.parseFrom(resultStr));
-        } catch (HyperLedgerException | InvalidProtocolBufferException e) {
-            throw new BCSAPIException(e);
+            String hexedHash = ByteUtils.toHex(hash.toByteArray());
+            ByteString result = query("getTran", Collections.singletonList(hexedHash));
+            byte[] resultStr = result.toByteArray();
+            if (resultStr.length == 0) return null;
+            return new APITransaction(new WireFormatter().fromWire(resultStr), BID.INVALID);
+        } catch (IOException e) {
+            throw new BCSAPIException (e);
         }
     }
 
@@ -172,7 +177,14 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public void sendTransaction(Transaction transaction) throws BCSAPIException {
-        invoke(chaincodeName, transaction.toBCSAPIMessage().toByteArray());
+        try {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            WireFormat.Writer w = new WireFormat.Writer(os);
+            new WireFormatter().toWire(transaction, w);
+            invoke(chaincodeName, os.toByteArray());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

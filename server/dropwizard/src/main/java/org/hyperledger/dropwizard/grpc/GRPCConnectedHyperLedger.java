@@ -39,14 +39,15 @@ public class GRPCConnectedHyperLedger implements HyperLedgerConfiguration {
 	@Override
 	public ManagedBCSAPI createBCSAPI() {
 		return new ManagedBCSAPI() {
-			String ip = config.getString("ip");
-			
-            public GRPCClient client = new GRPCClient(); 
+			String host = config.getString("host");
+			int port = Integer.parseInt(config.getString("port"));
+
+            public GRPCClient client = new GRPCClient(host, port);
 
 			@Override
 			public void start() throws Exception {
 				log.info("Connecting to gRPC");
-				log.info("ip=" + ip);
+				log.info("host:port={}:{}", host, port);
 			}
 
 			@Override

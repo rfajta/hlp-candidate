@@ -15,31 +15,21 @@
 package org.hyperledger.connector;
 
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.ManagedChannel;
 import io.grpc.netty.NegotiationType;
 import io.grpc.netty.NettyChannelBuilder;
-import org.hyperledger.api.APIBlock;
-import org.hyperledger.api.APIBlockIdList;
-import org.hyperledger.api.APIHeader;
-import org.hyperledger.api.APITransaction;
-import org.hyperledger.api.AlertListener;
-import org.hyperledger.api.BCSAPI;
-import org.hyperledger.api.BCSAPIException;
-import org.hyperledger.api.RejectListener;
-import org.hyperledger.api.TransactionListener;
-import org.hyperledger.api.TrunkListener;
-import org.hyperledger.common.Address;
-import org.hyperledger.common.BID;
-import org.hyperledger.common.Block;
-import org.hyperledger.common.MasterPublicKey;
-import org.hyperledger.common.TID;
-import org.hyperledger.common.Transaction;
+import org.hyperledger.api.*;
+import org.hyperledger.common.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import protos.Chaincode;
 import protos.Chaincode.ChaincodeID;
 import protos.Chaincode.ChaincodeInput;
 import protos.Chaincode.ChaincodeInvocationSpec;
@@ -47,6 +37,7 @@ import protos.Chaincode.ChaincodeSpec;
 import protos.DevopsGrpc;
 import protos.DevopsGrpc.DevopsBlockingStub;
 
+import protos.Openchain;
 import protos.OpenchainGrpc;
 import protos.OpenchainGrpc.OpenchainBlockingStub;
 import protos.Api.BlockCount;
@@ -85,6 +76,30 @@ public class GRPCClient implements BCSAPI {
         chaincodeInvocationSpec.setChaincodeSpec(chaincodeSpec);
 
         dbs.invoke(chaincodeInvocationSpec.build());
+    }
+
+    private ByteString query(String functionName, Iterable<String> args) {
+        Chaincode.ChaincodeID chainCodeId = Chaincode.ChaincodeID.newBuilder()
+                .setName("utxo")
+                .build();
+
+        Chaincode.ChaincodeInput chainCodeInput = Chaincode.ChaincodeInput.newBuilder()
+                .setFunction(functionName)
+                .addAllArgs(args)
+                .build();
+
+        Chaincode.ChaincodeSpec chaincodeSpec = Chaincode.ChaincodeSpec.newBuilder()
+                .setChaincodeID(chainCodeId)
+                .setCtorMsg(chainCodeInput)
+                .build();
+
+        Chaincode.ChaincodeInvocationSpec chaincodeInvocationSpec = Chaincode.ChaincodeInvocationSpec.newBuilder()
+                .setChaincodeSpec(chaincodeSpec)
+                .build();
+
+        Openchain.Response response = dbs.query(chaincodeInvocationSpec);
+
+        return response.getMsg();
     }
 
     public int getBlockHeight() {
@@ -149,8 +164,13 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public APITransaction getTransaction(TID hash) throws BCSAPIException {
-        // TODO Auto-generated method stub
-        return null;
+        ByteString result = query("getTran", Collections.singletonList(hash.toString()));
+        byte[] resultStr = result.toByteArray();
+        try {
+            return APITransaction.fromProtobuf(BCSAPIMessage.TX.parseFrom(resultStr));
+        } catch (HyperLedgerException | InvalidProtocolBufferException e) {
+            throw new BCSAPIException(e);
+        }
     }
 
     @Override

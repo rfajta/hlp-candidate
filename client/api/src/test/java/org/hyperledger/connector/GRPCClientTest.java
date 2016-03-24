@@ -35,10 +35,11 @@ public class GRPCClientTest {
     
     private String host = "localhost";
     private int port = 30303;
+	private int observerPort = 31315;
 	
 	@Test
 	public void testGetBlockHeight() throws BCSAPIException {
-		GRPCClient client = new GRPCClient(host, port);
+		GRPCClient client = new GRPCClient(host, port, observerPort);
 		
 		int height = client.getChainHeight();
 		
@@ -58,7 +59,7 @@ public class GRPCClientTest {
 		
 		log.debug("testSendTransaction tx=" + tx);
 		
-        GRPCClient client = new GRPCClient(host, port);
+        GRPCClient client = new GRPCClient(host, port, observerPort);
         
         client.sendTransaction(tx);
 		

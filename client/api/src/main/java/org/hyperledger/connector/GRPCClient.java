@@ -150,6 +150,7 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public APIHeader getBlockHeader(BID hash) throws BCSAPIException {
+        // TODO we will need this
         throw new UnsupportedOperationException();
     }
 
@@ -191,7 +192,8 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public APIHeader mine(Address address) throws BCSAPIException {
-        throw new UnsupportedOperationException();
+        log.info("mine discarded for {}", address);
+        return null;
     }
 
     @Override
@@ -201,6 +203,7 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public void registerTransactionListener(TransactionListener listener) throws BCSAPIException {
+        // TODO we will need this
         throw new UnsupportedOperationException();
     }
 
@@ -228,12 +231,14 @@ public class GRPCClient implements BCSAPI {
     @Override
     public void scanTransactions(MasterPublicKey master, int lookAhead, TransactionListener listener)
             throws BCSAPIException {
+        // TODO we will need this
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void catchUp(List<BID> inventory, int limit, boolean headers, TrunkListener listener)
             throws BCSAPIException {
+        // TODO we will need this
         throw new UnsupportedOperationException();
     }
 

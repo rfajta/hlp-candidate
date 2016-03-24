@@ -14,13 +14,25 @@
 
 package org.hyperledger.connector;
 
+import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.Channel;
 import io.grpc.stub.StreamObserver;
+import org.hyperledger.api.APITransaction;
+import org.hyperledger.api.BCSAPIMessage;
+import org.hyperledger.api.TransactionListener;
+import org.hyperledger.common.HyperLedgerException;
+import protos.Chaincode;
 import protos.OpenchainEventsGrpc;
 import protos.Events;
 
+import javax.xml.bind.DatatypeConverter;
+import java.util.HashSet;
+import java.util.Set;
+
 public class GRPCObserver {
     private OpenchainEventsGrpc.OpenchainEventsStub es;
+    private Set<TransactionListener> listeners = new HashSet<>();
 
     public GRPCObserver(Channel eventsChannel) {
         es = OpenchainEventsGrpc.newStub(eventsChannel);
@@ -30,6 +42,18 @@ public class GRPCObserver {
         StreamObserver<Events.OpenchainEvent> receiver = new StreamObserver<Events.OpenchainEvent>() {
             @Override
             public void onNext(Events.OpenchainEvent openchainEvent) {
+                listeners.forEach((listener) -> {
+                    try {
+                        ByteString invocationSpecBytes = openchainEvent.getBlock().getTransactions(0).getPayload();
+                        Chaincode.ChaincodeInvocationSpec invocationSpec = Chaincode.ChaincodeInvocationSpec.parseFrom(invocationSpecBytes);
+                        String transactionString = invocationSpec.getChaincodeSpec().getCtorMsg().getArgs(0);
+                        byte[] transactionBytes = DatatypeConverter.parseBase64Binary(transactionString);
+                        BCSAPIMessage.TX tx = BCSAPIMessage.TX.parseFrom(transactionBytes);
+                        listener.process(APITransaction.fromProtobuf(tx));
+                    } catch (HyperLedgerException | InvalidProtocolBufferException e) {
+                        e.printStackTrace();
+                    }
+                });
                 System.out.println("new event: " + openchainEvent.toString());
             }
 
@@ -60,5 +84,13 @@ public class GRPCObserver {
                 .build();
 
         sender.onNext(registerEvent);
+    }
+
+    public void subscribe(TransactionListener l) {
+        listeners.add(l);
+    }
+
+    public void unsubscribe(TransactionListener l) {
+        listeners.remove(l);
     }
 }

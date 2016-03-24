@@ -56,9 +56,10 @@ public class GRPCClient implements BCSAPI {
 
     public GRPCClient(String host, int port) {
         ManagedChannel channel = NettyChannelBuilder.forAddress(host, port).negotiationType(NegotiationType.PLAINTEXT).build();
-        this.dbs = DevopsGrpc.newBlockingStub(channel);
-        this.obs = OpenchainGrpc.newBlockingStub(channel);
-        this.observer = new GRPCObserver(channel);
+        dbs = DevopsGrpc.newBlockingStub(channel);
+        obs = OpenchainGrpc.newBlockingStub(channel);
+        observer = new GRPCObserver(channel);
+        observer.connect();
     }
 
     public void invoke(String chaincodeName, byte[] transaction) {
@@ -195,18 +196,17 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public void registerTransactionListener(TransactionListener listener) throws BCSAPIException {
-        // TODO we will need this
-        throw new UnsupportedOperationException();
+        observer.subscribe(listener);
     }
 
     @Override
     public void removeTransactionListener(TransactionListener listener) {
-        throw new UnsupportedOperationException();
+        observer.unsubscribe(listener);
     }
 
     @Override
     public void registerTrunkListener(TrunkListener listener) throws BCSAPIException {
-        observer.connect();
+        throw new UnsupportedOperationException();
     }
 
     @Override

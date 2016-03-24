@@ -13,16 +13,15 @@
  */
 package org.hyperledger.dropwizard.grpc;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.typesafe.config.Config;
 import org.hyperledger.api.BCSAPI;
 import org.hyperledger.connector.GRPCClient;
 import org.hyperledger.dropwizard.HyperLedgerConfiguration;
 import org.hyperledger.dropwizard.ManagedBCSAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.typesafe.config.Config;
 
 public class GRPCConnectedHyperLedger implements HyperLedgerConfiguration {
     private static final Logger log = LoggerFactory.getLogger(GRPCConnectedHyperLedger.class);

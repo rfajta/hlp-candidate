@@ -16,3 +16,7 @@ tags
 coverageReports
 **/logs
 
+.project
+.classpath
+.settings
+*~

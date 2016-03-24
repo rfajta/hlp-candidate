@@ -24,6 +24,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.ManagedChannel;
 import io.grpc.netty.NegotiationType;
 import io.grpc.netty.NettyChannelBuilder;
+import io.grpc.stub.StreamObserver;
 import org.hyperledger.api.*;
 import org.hyperledger.common.*;
 import org.slf4j.Logger;
@@ -36,6 +37,7 @@ import protos.Chaincode.ChaincodeInvocationSpec;
 import protos.Chaincode.ChaincodeSpec;
 import protos.DevopsGrpc;
 import protos.DevopsGrpc.DevopsBlockingStub;
+import protos.Events;
 
 import protos.Openchain;
 import protos.OpenchainGrpc;
@@ -51,6 +53,7 @@ public class GRPCClient implements BCSAPI {
 
     private DevopsBlockingStub dbs;
     private OpenchainBlockingStub obs;
+
     private final GRPCObserver observer;
 
     public GRPCClient(String host, int port) {
@@ -224,8 +227,7 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public void registerTrunkListener(TrunkListener listener) throws BCSAPIException {
-        // TODO Auto-generated method stub
-
+        observer.connect();
     }
 
     @Override

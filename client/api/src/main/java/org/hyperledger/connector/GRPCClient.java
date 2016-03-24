@@ -115,56 +115,47 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public String getClientVersion() throws BCSAPIException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public String getServerVersion() throws BCSAPIException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public long ping(long nonce) throws BCSAPIException {
-        // TODO Auto-generated method stub
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void addAlertListener(AlertListener listener) throws BCSAPIException {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void removeAlertListener(AlertListener listener) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public int getChainHeight() throws BCSAPIException {
-        log.debug("getChainHeight");
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public APIBlockIdList getBlockIds(BID blockId, int count) throws BCSAPIException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public APIHeader getBlockHeader(BID hash) throws BCSAPIException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public APIBlock getBlock(BID hash) throws BCSAPIException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -180,8 +171,7 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public List<APITransaction> getInputTransactions(TID txId) throws BCSAPIException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -191,38 +181,32 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public void registerRejectListener(RejectListener rejectListener) throws BCSAPIException {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void removeRejectListener(RejectListener rejectListener) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public APIHeader mine(Address address) throws BCSAPIException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void sendBlock(Block block) throws BCSAPIException {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void registerTransactionListener(TransactionListener listener) throws BCSAPIException {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void removeTransactionListener(TransactionListener listener) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -232,35 +216,30 @@ public class GRPCClient implements BCSAPI {
 
     @Override
     public void removeTrunkListener(TrunkListener listener) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void scanTransactionsForAddresses(Set<Address> addresses, TransactionListener listener)
             throws BCSAPIException {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void scanTransactions(MasterPublicKey master, int lookAhead, TransactionListener listener)
             throws BCSAPIException {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void catchUp(List<BID> inventory, int limit, boolean headers, TrunkListener listener)
             throws BCSAPIException {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void spendingTransactions(List<TID> tids, TransactionListener listener) throws BCSAPIException {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
 }

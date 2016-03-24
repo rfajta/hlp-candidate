@@ -14,17 +14,8 @@
 
 package protos;
 
-import static io.grpc.stub.ClientCalls.asyncUnaryCall;
-import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
-import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
-import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
-import static io.grpc.stub.ClientCalls.blockingUnaryCall;
-import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
-import static io.grpc.stub.ClientCalls.futureUnaryCall;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
-import static io.grpc.stub.ServerCalls.asyncUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
 
 @javax.annotation.Generated("by gRPC proto compiler")
@@ -62,7 +53,7 @@ public class OpenchainEventsGrpc {
   public static interface OpenchainEvents {
 
     public io.grpc.stub.StreamObserver<protos.Events.OpenchainEvent> chat(
-        io.grpc.stub.StreamObserver<protos.Events.OpenchainEvent> responseObserver);
+            io.grpc.stub.StreamObserver<protos.Events.OpenchainEvent> responseObserver);
   }
 
   public static interface OpenchainEventsBlockingClient {
@@ -82,13 +73,13 @@ public class OpenchainEventsGrpc {
       super(channel, callOptions);
     }
 
-    @java.lang.Override
+    @Override
     protected OpenchainEventsStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new OpenchainEventsStub(channel, callOptions);
     }
 
-    @java.lang.Override
+    @Override
     public io.grpc.stub.StreamObserver<protos.Events.OpenchainEvent> chat(
         io.grpc.stub.StreamObserver<protos.Events.OpenchainEvent> responseObserver) {
       return asyncBidiStreamingCall(
@@ -107,7 +98,7 @@ public class OpenchainEventsGrpc {
       super(channel, callOptions);
     }
 
-    @java.lang.Override
+    @Override
     protected OpenchainEventsBlockingStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new OpenchainEventsBlockingStub(channel, callOptions);
@@ -125,7 +116,7 @@ public class OpenchainEventsGrpc {
       super(channel, callOptions);
     }
 
-    @java.lang.Override
+    @Override
     protected OpenchainEventsFutureStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new OpenchainEventsFutureStub(channel, callOptions);
@@ -141,7 +132,7 @@ public class OpenchainEventsGrpc {
           new io.grpc.stub.ServerCalls.BidiStreamingMethod<
               protos.Events.OpenchainEvent,
               protos.Events.OpenchainEvent>() {
-            @java.lang.Override
+            @Override
             public io.grpc.stub.StreamObserver<protos.Events.OpenchainEvent> invoke(
                 io.grpc.stub.StreamObserver<protos.Events.OpenchainEvent> responseObserver) {
               return serviceImpl.chat(responseObserver);

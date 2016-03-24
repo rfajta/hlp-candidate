@@ -51,11 +51,13 @@ public class GRPCClient implements BCSAPI {
 
     private DevopsBlockingStub dbs;
     private OpenchainBlockingStub obs;
+    private final GRPCObserver observer;
 
     public GRPCClient(String host, int port) {
         ManagedChannel channel = NettyChannelBuilder.forAddress(host, port).negotiationType(NegotiationType.PLAINTEXT).build();
         this.dbs = DevopsGrpc.newBlockingStub(channel);
         this.obs = OpenchainGrpc.newBlockingStub(channel);
+        this.observer = new GRPCObserver(channel);
     }
 
     public void invoke(String chaincodeName, byte[] transaction) {

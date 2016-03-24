@@ -25,7 +25,7 @@ public final class Events {
     /**
      * <code>optional string eventType = 1;</code>
      */
-    java.lang.String getEventType();
+    String getEventType();
     /**
      * <code>optional string eventType = 1;</code>
      */
@@ -57,7 +57,7 @@ public final class Events {
       responseType_ = 0;
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
@@ -82,7 +82,7 @@ public final class Events {
               break;
             }
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               eventType_ = s;
               break;
@@ -110,7 +110,7 @@ public final class Events {
       return protos.Events.internal_static_protos_Interest_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return protos.Events.internal_static_protos_Interest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
@@ -177,7 +177,7 @@ public final class Events {
 
       public final int getNumber() {
         if (index == -1) {
-          throw new java.lang.IllegalArgumentException(
+          throw new IllegalArgumentException(
               "Can't get the number of an unknown enum value.");
         }
         return value;
@@ -222,7 +222,7 @@ public final class Events {
       public static ResponseType valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
+          throw new IllegalArgumentException(
             "EnumValueDescriptor is not for this type.");
         }
         if (desc.getIndex() == -1) {
@@ -243,18 +243,18 @@ public final class Events {
     }
 
     public static final int EVENTTYPE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object eventType_;
+    private volatile Object eventType_;
     /**
      * <code>optional string eventType = 1;</code>
      */
-    public java.lang.String getEventType() {
-      java.lang.Object ref = eventType_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getEventType() {
+      Object ref = eventType_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         eventType_ = s;
         return s;
       }
@@ -264,11 +264,11 @@ public final class Events {
      */
     public com.google.protobuf.ByteString
         getEventTypeBytes() {
-      java.lang.Object ref = eventType_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+      Object ref = eventType_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         eventType_ = b;
         return b;
       } else {
@@ -394,9 +394,9 @@ public final class Events {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -412,20 +412,20 @@ public final class Events {
         return protos.Events.internal_static_protos_Interest_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return protos.Events.internal_static_protos_Interest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 protos.Events.Interest.class, protos.Events.Interest.Builder.class);
       }
 
-      // Construct using protos.Events.Interest.newBuilder()
+      // Construct using Events.Interest.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -511,20 +511,20 @@ public final class Events {
         return this;
       }
 
-      private java.lang.Object eventType_ = "";
+      private Object eventType_ = "";
       /**
        * <code>optional string eventType = 1;</code>
        */
-      public java.lang.String getEventType() {
-        java.lang.Object ref = eventType_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getEventType() {
+        Object ref = eventType_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           eventType_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -532,11 +532,11 @@ public final class Events {
        */
       public com.google.protobuf.ByteString
           getEventTypeBytes() {
-        java.lang.Object ref = eventType_;
+        Object ref = eventType_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           eventType_ = b;
           return b;
         } else {
@@ -547,11 +547,11 @@ public final class Events {
        * <code>optional string eventType = 1;</code>
        */
       public Builder setEventType(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  
+
         eventType_ = value;
         onChanged();
         return this;
@@ -560,7 +560,7 @@ public final class Events {
        * <code>optional string eventType = 1;</code>
        */
       public Builder clearEventType() {
-        
+
         eventType_ = getDefaultInstance().getEventType();
         onChanged();
         return this;
@@ -574,7 +574,7 @@ public final class Events {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        
+
         eventType_ = value;
         onChanged();
         return this;
@@ -609,7 +609,7 @@ public final class Events {
         if (value == null) {
           throw new NullPointerException();
         }
-        
+
         responseType_ = value.getNumber();
         onChanged();
         return this;
@@ -618,7 +618,7 @@ public final class Events {
        * <code>optional .protos.Interest.ResponseType responseType = 2;</code>
        */
       public Builder clearResponseType() {
-        
+
         responseType_ = 0;
         onChanged();
         return this;
@@ -670,7 +670,7 @@ public final class Events {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<Interest> getParserForType() {
       return PARSER;
     }
@@ -688,7 +688,7 @@ public final class Events {
     /**
      * <code>repeated .protos.Interest events = 1;</code>
      */
-    java.util.List<protos.Events.Interest> 
+    java.util.List<protos.Events.Interest>
         getEventsList();
     /**
      * <code>repeated .protos.Interest events = 1;</code>
@@ -701,13 +701,13 @@ public final class Events {
     /**
      * <code>repeated .protos.Interest events = 1;</code>
      */
-    java.util.List<? extends protos.Events.InterestOrBuilder> 
+    java.util.List<? extends protos.Events.InterestOrBuilder>
         getEventsOrBuilderList();
     /**
      * <code>repeated .protos.Interest events = 1;</code>
      */
     protos.Events.InterestOrBuilder getEventsOrBuilder(
-        int index);
+            int index);
   }
   /**
    * Protobuf type {@code protos.Register}
@@ -730,7 +730,7 @@ public final class Events {
       events_ = java.util.Collections.emptyList();
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
@@ -782,7 +782,7 @@ public final class Events {
       return protos.Events.internal_static_protos_Register_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return protos.Events.internal_static_protos_Register_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
@@ -800,7 +800,7 @@ public final class Events {
     /**
      * <code>repeated .protos.Interest events = 1;</code>
      */
-    public java.util.List<? extends protos.Events.InterestOrBuilder> 
+    public java.util.List<? extends protos.Events.InterestOrBuilder>
         getEventsOrBuilderList() {
       return events_;
     }
@@ -920,9 +920,9 @@ public final class Events {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -944,20 +944,20 @@ public final class Events {
         return protos.Events.internal_static_protos_Register_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return protos.Events.internal_static_protos_Register_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 protos.Events.Register.class, protos.Events.Register.Builder.class);
       }
 
-      // Construct using protos.Events.Register.newBuilder()
+      // Construct using Events.Register.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1039,7 +1039,7 @@ public final class Events {
               eventsBuilder_ = null;
               events_ = other.events_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              eventsBuilder_ = 
+              eventsBuilder_ =
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getEventsFieldBuilder() : null;
             } else {
@@ -1212,7 +1212,7 @@ public final class Events {
        * <code>repeated .protos.Interest events = 1;</code>
        */
       public Builder addAllEvents(
-          java.lang.Iterable<? extends protos.Events.Interest> values) {
+          Iterable<? extends protos.Events.Interest> values) {
         if (eventsBuilder_ == null) {
           ensureEventsIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1269,7 +1269,7 @@ public final class Events {
       /**
        * <code>repeated .protos.Interest events = 1;</code>
        */
-      public java.util.List<? extends protos.Events.InterestOrBuilder> 
+      public java.util.List<? extends protos.Events.InterestOrBuilder>
            getEventsOrBuilderList() {
         if (eventsBuilder_ != null) {
           return eventsBuilder_.getMessageOrBuilderList();
@@ -1295,12 +1295,12 @@ public final class Events {
       /**
        * <code>repeated .protos.Interest events = 1;</code>
        */
-      public java.util.List<protos.Events.Interest.Builder> 
+      public java.util.List<protos.Events.Interest.Builder>
            getEventsBuilderList() {
         return getEventsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          protos.Events.Interest, protos.Events.Interest.Builder, protos.Events.InterestOrBuilder> 
+          protos.Events.Interest, protos.Events.Interest.Builder, protos.Events.InterestOrBuilder>
           getEventsFieldBuilder() {
         if (eventsBuilder_ == null) {
           eventsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -1360,7 +1360,7 @@ public final class Events {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<Register> getParserForType() {
       return PARSER;
     }
@@ -1378,7 +1378,7 @@ public final class Events {
     /**
      * <code>optional string eventType = 1;</code>
      */
-    java.lang.String getEventType();
+    String getEventType();
     /**
      * <code>optional string eventType = 1;</code>
      */
@@ -1412,7 +1412,7 @@ public final class Events {
       payload_ = com.google.protobuf.ByteString.EMPTY;
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
@@ -1437,7 +1437,7 @@ public final class Events {
               break;
             }
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               eventType_ = s;
               break;
@@ -1464,7 +1464,7 @@ public final class Events {
       return protos.Events.internal_static_protos_Generic_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return protos.Events.internal_static_protos_Generic_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
@@ -1472,18 +1472,18 @@ public final class Events {
     }
 
     public static final int EVENTTYPE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object eventType_;
+    private volatile Object eventType_;
     /**
      * <code>optional string eventType = 1;</code>
      */
-    public java.lang.String getEventType() {
-      java.lang.Object ref = eventType_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getEventType() {
+      Object ref = eventType_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         eventType_ = s;
         return s;
       }
@@ -1493,11 +1493,11 @@ public final class Events {
      */
     public com.google.protobuf.ByteString
         getEventTypeBytes() {
-      java.lang.Object ref = eventType_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+      Object ref = eventType_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         eventType_ = b;
         return b;
       } else {
@@ -1616,9 +1616,9 @@ public final class Events {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1640,20 +1640,20 @@ public final class Events {
         return protos.Events.internal_static_protos_Generic_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return protos.Events.internal_static_protos_Generic_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 protos.Events.Generic.class, protos.Events.Generic.Builder.class);
       }
 
-      // Construct using protos.Events.Generic.newBuilder()
+      // Construct using Events.Generic.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1739,20 +1739,20 @@ public final class Events {
         return this;
       }
 
-      private java.lang.Object eventType_ = "";
+      private Object eventType_ = "";
       /**
        * <code>optional string eventType = 1;</code>
        */
-      public java.lang.String getEventType() {
-        java.lang.Object ref = eventType_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getEventType() {
+        Object ref = eventType_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           eventType_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -1760,11 +1760,11 @@ public final class Events {
        */
       public com.google.protobuf.ByteString
           getEventTypeBytes() {
-        java.lang.Object ref = eventType_;
+        Object ref = eventType_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           eventType_ = b;
           return b;
         } else {
@@ -1775,11 +1775,11 @@ public final class Events {
        * <code>optional string eventType = 1;</code>
        */
       public Builder setEventType(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  
+
         eventType_ = value;
         onChanged();
         return this;
@@ -1788,7 +1788,7 @@ public final class Events {
        * <code>optional string eventType = 1;</code>
        */
       public Builder clearEventType() {
-        
+
         eventType_ = getDefaultInstance().getEventType();
         onChanged();
         return this;
@@ -1802,7 +1802,7 @@ public final class Events {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        
+
         eventType_ = value;
         onChanged();
         return this;
@@ -1822,7 +1822,7 @@ public final class Events {
         if (value == null) {
     throw new NullPointerException();
   }
-  
+
         payload_ = value;
         onChanged();
         return this;
@@ -1831,7 +1831,7 @@ public final class Events {
        * <code>optional bytes payload = 2;</code>
        */
       public Builder clearPayload() {
-        
+
         payload_ = getDefaultInstance().getPayload();
         onChanged();
         return this;
@@ -1883,7 +1883,7 @@ public final class Events {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<Generic> getParserForType() {
       return PARSER;
     }
@@ -1949,7 +1949,7 @@ public final class Events {
    * <pre>
    *OpenchainEvent is used by
    *  - consumers (adapters) to send Register
-   *  - producer to advertise supported types and events 
+   *  - producer to advertise supported types and events
    * </pre>
    */
   public  static final class OpenchainEvent extends
@@ -1963,7 +1963,7 @@ public final class Events {
     private OpenchainEvent() {
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
@@ -2046,7 +2046,7 @@ public final class Events {
       return protos.Events.internal_static_protos_OpenchainEvent_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return protos.Events.internal_static_protos_OpenchainEvent_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
@@ -2054,7 +2054,7 @@ public final class Events {
     }
 
     private int eventCase_ = 0;
-    private java.lang.Object event_;
+    private Object event_;
     public enum EventCase
         implements com.google.protobuf.Internal.EnumLite {
       REGISTER(1),
@@ -2071,7 +2071,7 @@ public final class Events {
           case 2: return BLOCK;
           case 3: return GENERIC;
           case 0: return EVENT_NOT_SET;
-          default: throw new java.lang.IllegalArgumentException(
+          default: throw new IllegalArgumentException(
             "Value is undefined for this oneof enum.");
         }
       }
@@ -2272,9 +2272,9 @@ public final class Events {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -2284,7 +2284,7 @@ public final class Events {
      * <pre>
      *OpenchainEvent is used by
      *  - consumers (adapters) to send Register
-     *  - producer to advertise supported types and events 
+     *  - producer to advertise supported types and events
      * </pre>
      */
     public static final class Builder extends
@@ -2296,20 +2296,20 @@ public final class Events {
         return protos.Events.internal_static_protos_OpenchainEvent_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return protos.Events.internal_static_protos_OpenchainEvent_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 protos.Events.OpenchainEvent.class, protos.Events.OpenchainEvent.Builder.class);
       }
 
-      // Construct using protos.Events.OpenchainEvent.newBuilder()
+      // Construct using Events.OpenchainEvent.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -2423,7 +2423,7 @@ public final class Events {
         return this;
       }
       private int eventCase_ = 0;
-      private java.lang.Object event_;
+      private Object event_;
       public EventCase
           getEventCase() {
         return EventCase.valueOf(
@@ -2582,7 +2582,7 @@ public final class Events {
        * </pre>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          protos.Events.Register, protos.Events.Register.Builder, protos.Events.RegisterOrBuilder> 
+          protos.Events.Register, protos.Events.Register.Builder, protos.Events.RegisterOrBuilder>
           getRegisterFieldBuilder() {
         if (registerBuilder_ == null) {
           if (!(eventCase_ == 1)) {
@@ -2744,7 +2744,7 @@ public final class Events {
        * </pre>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          protos.Openchain.Block, protos.Openchain.Block.Builder, protos.Openchain.BlockOrBuilder> 
+          protos.Openchain.Block, protos.Openchain.Block.Builder, protos.Openchain.BlockOrBuilder>
           getBlockFieldBuilder() {
         if (blockBuilder_ == null) {
           if (!(eventCase_ == 2)) {
@@ -2874,7 +2874,7 @@ public final class Events {
        * <code>optional .protos.Generic generic = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          protos.Events.Generic, protos.Events.Generic.Builder, protos.Events.GenericOrBuilder> 
+          protos.Events.Generic, protos.Events.Generic.Builder, protos.Events.GenericOrBuilder>
           getGenericFieldBuilder() {
         if (genericBuilder_ == null) {
           if (!(eventCase_ == 3)) {
@@ -2938,7 +2938,7 @@ public final class Events {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<OpenchainEvent> getParserForType() {
       return PARSER;
     }
@@ -2977,7 +2977,7 @@ public final class Events {
   private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\014events.proto\022\006protos\032\017openchain.proto\"" +
       "\210\001\n\010Interest\022\021\n\teventType\030\001 \001(\t\0223\n\014respo" +
       "nseType\030\002 \001(\0162\035.protos.Interest.Response" +
@@ -3010,25 +3010,25 @@ public final class Events {
     internal_static_protos_Interest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_protos_Interest_descriptor,
-        new java.lang.String[] { "EventType", "ResponseType", });
+        new String[] { "EventType", "ResponseType", });
     internal_static_protos_Register_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_protos_Register_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_protos_Register_descriptor,
-        new java.lang.String[] { "Events", });
+        new String[] { "Events", });
     internal_static_protos_Generic_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_protos_Generic_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_protos_Generic_descriptor,
-        new java.lang.String[] { "EventType", "Payload", });
+        new String[] { "EventType", "Payload", });
     internal_static_protos_OpenchainEvent_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_protos_OpenchainEvent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_protos_OpenchainEvent_descriptor,
-        new java.lang.String[] { "Register", "Block", "Generic", "Event", });
+        new String[] { "Register", "Block", "Generic", "Event", });
     protos.Openchain.getDescriptor();
   }
 

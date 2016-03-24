@@ -48,8 +48,6 @@ public class AccountOperationsViaGrpcTest {
 
         PrivateKey priv = PrivateKey.createNew();
         KeyListChain senderKeyChain = new KeyListChain(priv);
-
-        UIAddress senderAddress = new UIAddress(UIAddress.Network.TEST, senderKeyChain.getNextReceiverAddress());
         BaseAccount senderAccount = new BaseAccount(senderKeyChain);
         api.registerTransactionListener(senderAccount);
 
@@ -61,8 +59,7 @@ public class AccountOperationsViaGrpcTest {
         ActionWaiter.execute(() -> api.sendTransaction(tx), expected(senderAccount, 1));
 
         int newChainHeight = api.getChainHeight();
-        assertEquals(startingChainHeight + 1, newChainHeight);
-
+        assertEquals("No block was created", startingChainHeight + 1, newChainHeight);
         assertEquals("Incorrect balance", 100000000, senderAccount.getCoins().getTotalSatoshis());
     }
 }

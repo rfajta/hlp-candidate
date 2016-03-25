@@ -44,7 +44,7 @@ Version numbers below indicate the versions used.
  * Maven 3.3.3 (http://maven.apache.org)
  * Java 1.8.0_51 (http://java.oracle.com)
  * JCE 8 (Java Crptography Extension) (http://java.oracle.com)
- * Protobuf compiler 2.5.0 (http://github.com/google/protobuf)
+ * Protobuf compiler 3.0.0-beta-2 (http://github.com/google/protobuf)
  * lockfile command 3.22 (from procmail package)
 
 #### Optionally a JMS bus provider

@@ -21,7 +21,7 @@ syntax = "proto3";
 
 package protos;
 
-import "openchain.proto";
+import "fabric.proto";
 import "google/protobuf/empty.proto";
 
 // Interface exported by the server.
@@ -39,17 +39,10 @@ service Openchain {
     // structure.
     rpc GetBlockCount(google.protobuf.Empty) returns (BlockCount) {}
 
+    // GetPeers returns a list of all peer nodes currently connected to the target
+    // peer.
+    rpc GetPeers(google.protobuf.Empty) returns (PeersMessage) {}
 }
-
-//// Contains information about the blockchain ledger such as height, current
-//// block hash, and previous block hash.
-//message BlockchainInfo {
-//
-//    uint64 height = 1;
-//    bytes currentBlockHash = 2;
-//    bytes previousBlockHash = 3;
-//
-//}
 
 // Specifies the block number to be returned from the blockchain.
 message BlockNumber {

@@ -43,7 +43,7 @@ class ServerActor extends Actor with ActorLogging {
 
   override def preStart(): Unit = {
     hyperLedger.coreAssembly.getCoreOutbox.addListener(new ServerOutboxListener {
-      override def onP2PEvent(e: P2PEvent[_]): Unit = context.self ! e.getContent
+      override def onP2PEvent(e: P2PEvent[_]): Unit = context.self ! e
     })
   }
 
